@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaMax</title>
+    <style>
+        body {
+            background-color: #021527;
+            color: gold;
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            max-width: 800px;
+            margin: auto;
+            transition: background-color 0.3s;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5em;
+            font-style: italic;
+            animation: fadeIn 0.5s;
+        }
+        .header-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .header-buttons button {
+            background-color: #ffcc00;
+            color: #001f3f;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-style: italic;
+            margin-left: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .header-buttons button:hover {
+            background-color: #ffd700;
+            transform: scale(1.05);
+        }
+        .search-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .search-container input {
+            padding: 8px;
+            border: 1px solid gold;
+            border-radius: 5px;
+            background-color: #002244;
+            color: gold;
+        }
+        .productos, .carrito, .pago, .contacto {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .producto, .carrito-item {
+            background-color: #003366;
+            border: 1px solid gold;
+            border-radius: 15px;
+            margin: 10px;
+            padding: 15px;
+            width: 200px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .producto:hover {
+            transform: scale(1.05);
+        }
+        .producto img {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+        }
+        .cantidad {
+            width: 60px;
+            margin-left: 10px;
+            padding: 5px;
+            border: 1px solid gold;
+            border-radius: 5px;
+            background-color: #002244;
+            color: gold;
+        }
+        .btn-anadir {
+            background-color: #ffcc00;
+            color: #001f3f;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn-anadir:hover {
+            background-color: #ffd700;
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            font-style: italic;
+        }
+        .form-control {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid gold;
+            background-color: #002244;
+            color: gold;
+        }
+        .btn-pagar, .btn-volver {
+            background-color: #ffcc00;
+            color: #001f3f;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn-pagar:hover, .btn-volver:hover {
+            background-color: #ffd700;
+        }
+        .mensaje {
+            display: none;
+            background-color: #ffcc00;
+            color: #001f3f;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            border-radius: 5px;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .header-fixed {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: auto;
+            z-index: 10;
+            transition: top 0.3s;
+        }
+
+        .search-fixed {
+            position: fixed;
+            top: 0;
+            left: 20px;
+            z-index: 10;
+            transition: top 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Bienvenido a VitaMAX
+</header>
+
+<div class="search-container">
+    <input type="text" id="search" placeholder="Buscar productos..." oninput="filtrarProductos()">
+</div>
+
+<div class="header-buttons">
+    <button onclick="mostrarCarrito()">Carrito</button>
+    <button onclick="mostrarContacto()">Contáctanos</button>
+    <a href="informacion.html"><button>Información</button></a>
+</div>
+
+<div class="productos">
+    <h2>Productos</h2>
+    <div class="producto" data-nombre="MEGAPLEX CREATINE POWER VAINILLA 2LB">
+        <h3>MEGAPLEX CREATINE POWER VAINILLA 2LB</h3>
+        <img src="https://nutramerican.com/api_MegaplexStar/assets/productos2024webp/megaplex_creatine_power_2lb/megaplex_creatine_power_2lb-nutramerican-pharma-big.webp" alt="Muestra">
+        <p>Precio: 41.000</p>
+        <input type="number" class="cantidad" id="cantidad1" value="1" min="1">
+        <button class="btn-anadir" onclick="agregarAlCarrito('MEGAPLEX CREATINE POWER VAINILLA 2LB', 41000, document.getElementById('cantidad1').value)">Añadir al Carrito</button>
+    </div>
+    <div class="producto" data-nombre="MEGAPLEX CREATINE POWER 2LB COOKIES">
+        <h3>MEGAPLEX CREATINE POWER 2LB COOKIES</h3>
+        <img src="https://nutramerican.com/api_MegaplexStar/assets/productos2024webp/megaplex-cookies-and-cream/megaplex-cookies-and-cream-nutramerican-pharma-medium.webp" alt="Muestra">
+        <p>Precio: 41.000</p>
+        <input type="number" class="cantidad" id="cantidad2" value="1" min="1">
+        <button class="btn-anadir" onclick="agregarAlCarrito('MEGAPLEX CREATINE POWER 2LB COOKIES', 41000, document.getElementById('cantidad2').value)">Añadir al Carrito</button>
+    </div>
+    <div class="producto" data-nombre="MEGAPLEX CREATINE POWER 10LB VAINILLA">
+        <h3>MEGAPLEX CREATINE POWER 10LB VAINILLA</h3>
+        <img src="https://nutramerican.com/api_MegaplexStar/assets/productos3dwebp/creatine_power_10lb_2024/creatine_power_10lb_2024-nutramerican-pharma-big.webp" alt="Muestra">
+        <p>Precio: 165.000</p>
+        <input type="number" class="cantidad" id="cantidad3" value="1" min="1">
+        <button class="btn-anadir" onclick="agregarAlCarrito('MEGAPLEX CREATINE POWER 10LB VAINILLA', 165000, document.getElementById('cantidad3').value)">Añadir al Carrito</button>
+    </div>
+    <div class="producto" data-nombre="CAJA BIPRO 18 STACHES">
+        <h3>CAJA BIPRO 18 STACHES</h3>
+        <img src="https://nutramerican.com/api_MegaplexStar/assets/productos3dwebp/bipro_18_staches/box_bipro_18_staches-nutramerican-pharma-big.webp" alt="Muestra">
+        <p>Precio: 41.000</p>
+        <input type="number" class="cantidad" id="cantidad4" value="1" min="1">
+        <button class="btn-anadir" onclick="agregarAlCarrito('CAJA BIPRO 18 STACHES', 41000, document.getElementById('cantidad4').value)">Añadir al Carrito</button>
+    </div>
+    <div class="producto" data-nombre="CAJA BIPRO 18 STACHES (TAMALITO)">
+        <h3>CAJA BIPRO 18 STACHES (TAMALITO)</h3>
+        <img src="https://nutramerican.com/api_MegaplexStar/assets/productos3dwebp/bipro_18_staches/box_bipro_18_staches-nutramerican-pharma-big.webp" alt="Muestra">
+        <p>Precio: 41.000</p>
+        <input type="number" class="cantidad" id="cantidad5" value="1" min="1">
+        <button class="btn-anadir" onclick="agregarAlCarrito('CAJA BIPRO 18 STACHES (TAMALITO)', 41000, document.getElementById('cantidad5').value)">Añadir al Carrito</button>
+    </div>
+    <div class="producto" data-nombre="TIGER BITE 60 G">
+        <h3>TIGER BITE 60 G</h3>
+        <img src="https://nutramerican.com/api_MegaplexStar/assets/productos3dwebp/tiger_bite_60g/tiger_bite_60g-nutramerican-pharma-big.webp" alt="Muestra">
+        <p>Precio: 22.000</p>
+        <input type="number" class="cantidad" id="cantidad6" value="1" min="1">
+        <button class="btn-anadir" onclick="agregarAlCarrito('TIGER BITE 60 G', 22000, document.getElementById('cantidad6').value)">Añadir al Carrito</button>
+    </div>
+</div>
+
+<div class="carrito">
+    <h2>Carrito de Compras</h2>
+    <div id="carrito-items"></div>
+    <p id="total-carrito">Total: 0</p>
+    <button class="btn-pagar" onclick="pagar()">Pagar</button>
+    <button class="btn-volver" onclick="mostrarProductos()">Volver a Productos</button>
+</div>
+
+<div class="contacto">
+    <h2>Contáctanos</h2>
+    <form id="contacto-form" onsubmit="enviarMensaje(event)">
+        <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+        <input type="email" class="form-control" id="email" placeholder="Email" required>
+        <textarea class="form-control" id="mensaje" placeholder="Mensaje" required></textarea>
+        <button type="submit" class="btn-pagar">Enviar</button>
+    </form>
+    <div class="mensaje" id="mensaje-enviado">Mensaje enviado, gracias por contactarnos.</div>
+    <p>También puedes contactarnos a través de:</p>
+    <p>
+        <a href="https://wa.me/573123456789" target="_blank" style="color: gold; text-decoration: underline;">WhatsApp</a>
+    </p>
+    <p>Correo: <a href="mailto:juanesteban1@lajoseroberto.edu.co" style="color: gold; text-decoration: underline;">juanesteban1@lajoseroberto.edu.co</a></p>
+</div>
+
+<footer>
+    &copy; 2024 VitaMAX. Todos los derechos reservados.
+</footer>
+
+<script>
+    let carrito = [];
+    let total = 0;
+
+    function agregarAlCarrito(nombre, precio, cantidad) {
+        const cantidadNum = parseInt(cantidad);
+        const productoExistente = carrito.find(item => item.nombre === nombre);
+        if (productoExistente) {
+            productoExistente.cantidad += cantidadNum;
+        } else {
+            carrito.push({ nombre, precio, cantidad: cantidadNum });
+        }
+        total += precio * cantidadNum;
+        mostrarMensaje(`Añadido ${cantidadNum} de ${nombre} al carrito.`);
+        actualizarCarrito();
+    }
+
+    function mostrarCarrito() {
+        document.querySelector('.productos').style.display = 'none';
+        document.querySelector('.carrito').style.display = 'block';
+        document.querySelector('.contacto').style.display = 'none';
+    }
+
+    function mostrarProductos() {
+        document.querySelector('.productos').style.display = 'block';
+        document.querySelector('.carrito').style.display = 'none';
+        document.querySelector('.contacto').style.display = 'none';
+    }
+
+    function mostrarContacto() {
+        document.querySelector('.productos').style.display = 'none';
+        document.querySelector('.carrito').style.display = 'none';
+        document.querySelector('.contacto').style.display = 'block';
+    }
+
+    function actualizarCarrito() {
+        const carritoItems = document.getElementById('carrito-items');
+        carritoItems.innerHTML = '';
+        carrito.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'carrito-item';
+            div.innerHTML = `${item.nombre} - ${item.cantidad} x ${item.precio} = ${item.cantidad * item.precio}`;
+            carritoItems.appendChild(div);
+        });
+        document.getElementById('total-carrito').innerText = `Total: ${total}`;
+    }
+
+    function pagar() {
+        if (carrito.length === 0) {
+            alert('El carrito está vacío.');
+            return;
+        }
+        alert('Gracias por su compra.');
+        carrito = [];
+        total = 0;
+        actualizarCarrito();
+        mostrarProductos();
+    }
+
+    function filtrarProductos() {
+        const busqueda = document.getElementById('search').value.toLowerCase();
+        const productos = document.querySelectorAll('.producto');
+        productos.forEach(producto => {
+            const nombre = producto.getAttribute('data-nombre').toLowerCase();
+            producto.style.display = nombre.includes(busqueda) ? 'inline-block' : 'none';
+        });
+    }
+
+    function enviarMensaje(event) {
+        event.preventDefault();
+        document.getElementById('mensaje-enviado').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('mensaje-enviado').style.display = 'none';
+        }, 3000);
+    }
+
+    mostrarProductos();
+</script>
+
+</body>
+</html>
